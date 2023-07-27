@@ -44,7 +44,7 @@ final class BrowsrLibTests: XCTestCase {
                                avatarURL: "www.avatar.com",
                                description: "aoecuh 'r,.ch'r aonetuha")
         organizationsUseCase.result = .success([org])
-        sut.getOrganizations()
+        sut.getOrganizations(page: 1)
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -66,7 +66,7 @@ final class BrowsrLibTests: XCTestCase {
         var error: Error?
         var endResult: [Organization] = []
         organizationsUseCase.result = .failure(URLError(.cannotLoadFromNetwork))
-        sut.getOrganizations()
+        sut.getOrganizations(page: 1)
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -97,7 +97,7 @@ final class BrowsrLibTests: XCTestCase {
                         organizationsUseCase: organizationsUseCase)
         
         organizationsUseCase.result = .failure(URLError(.cannotLoadFromNetwork))
-        sut.getOrganizations()
+        sut.getOrganizations(page: 1)
             .sink { completion in
                 switch completion {
                 case .finished:

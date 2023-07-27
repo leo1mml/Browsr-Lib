@@ -8,11 +8,36 @@ public class GithubRequestMaker: RequestMaker {
         self.source = source
     }
     
-    public func makeFetchOrganizations() -> Result<URLRequest, Error> {
+    public func makeFetchOrganizations(page: Int) -> Result<URLRequest, Error> {
         var components = URLComponents()
         components.scheme = "https"
         components.host = source.baseUrl
         components.path = source.listingPath
+        guard let url = components.url else {
+            return .failure(URLError(.badURL))
+        }
+        let headers = [
+            "Content-Type": "application/json",
+            "Authorization": source.authToken
+        ]
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+        return .success(request)
+    }
+    
+    public func makeSearchOrganizations(with term: String, page: Int) -> Result<URLRequest, Error> {
+        let queryItems = [
+            URLQueryItem(name: "page", value: "\(page)")
+        ]
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = source.baseUrl
+        components.path = source.searchPath + "/\(term)"
+        components.queryItems = queryItems
+        
         guard let url = components.url else {
             return .failure(URLError(.badURL))
         }
