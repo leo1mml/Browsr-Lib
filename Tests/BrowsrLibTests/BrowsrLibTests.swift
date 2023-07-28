@@ -11,8 +11,8 @@ class MockOrganizationsUseCase: FetchOrganizationsUsecase {
         return result.publisher.eraseToAnyPublisher()
     }
     
-    var result: Result<[Organization], Error>?
-    func publisher(for request: URLRequest) -> AnyPublisher<[Organization], Error> {
+    var result: Result<([Organization], String), Error>?
+    func publisher(for request: URLRequest) -> AnyPublisher<([Organization], String), Error> {
         guard let result = result else {
             return Fail(error: URLError(.dataNotAllowed)).eraseToAnyPublisher()
         }
@@ -51,7 +51,7 @@ final class BrowsrLibTests: XCTestCase {
                                url: "www.test.com",
                                avatarURL: "www.avatar.com",
                                description: "aoecuh 'r,.ch'r aonetuha")
-        organizationsUseCase.result = .success([org])
+        organizationsUseCase.result = .success(([org], ""))
         sut.getOrganizations(page: 1)
             .sink { completion in
                 switch completion {
@@ -62,7 +62,7 @@ final class BrowsrLibTests: XCTestCase {
                 }
                 expectation.fulfill()
             } receiveValue: { organizations in
-                endResult = organizations
+                endResult = organizations.0
             }.store(in: &cancellables)
         wait(for: [expectation], timeout: 2)
         XCTAssert(!endResult.isEmpty)
@@ -84,7 +84,7 @@ final class BrowsrLibTests: XCTestCase {
                 }
                 expectation.fulfill()
             } receiveValue: { organizations in
-                endResult = organizations
+                endResult = organizations.0
             }.store(in: &cancellables)
         wait(for: [expectation], timeout: 2)
         XCTAssert(endResult.isEmpty)
@@ -115,7 +115,7 @@ final class BrowsrLibTests: XCTestCase {
                 }
                 expectation.fulfill()
             } receiveValue: { organizations in
-                endResult = organizations
+                endResult = organizations.0
             }.store(in: &cancellables)
         wait(for: [expectation], timeout: 2)
         XCTAssert(endResult.isEmpty)

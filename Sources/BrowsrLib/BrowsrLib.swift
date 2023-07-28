@@ -13,7 +13,7 @@ public class BrowsrLib {
         self.organizationsUseCase = organizationsUseCase
     }
     
-    public func getOrganizations(page: Int) -> AnyPublisher<[Organization], Error> {
+    public func getOrganizations(page: Int) -> AnyPublisher<([Organization], String), Error> {
         switch requestMaker.makeFetchOrganizations(page: page) {
         case .success(let request):
             return organizationsUseCase.publisher(for: request)
