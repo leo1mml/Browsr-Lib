@@ -1,6 +1,6 @@
 import Foundation
 
 public protocol RequestMaker {
-    func makeFetchOrganizations(page: Int) -> Result<URLRequest, Error>
-    func makeSearchOrganization(with term: String, page: Int) -> Result<URLRequest, Error>
+    func makeFetchOrganizations(customPath: String) -> Result<URLRequest, Error>
+    func makeSearchOrganization(with term: String) -> Result<URLRequest, Error>
 }

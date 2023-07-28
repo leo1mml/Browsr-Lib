@@ -13,8 +13,8 @@ public class BrowsrLib {
         self.organizationsUseCase = organizationsUseCase
     }
     
-    public func getOrganizations(page: Int) -> AnyPublisher<([Organization], String), Error> {
-        switch requestMaker.makeFetchOrganizations(page: page) {
+    public func getOrganizations(customPath: String) -> AnyPublisher<([Organization], String), Error> {
+        switch requestMaker.makeFetchOrganizations(customPath: customPath) {
         case .success(let request):
             return organizationsUseCase.publisher(for: request)
         case .failure(let error):
@@ -22,8 +22,8 @@ public class BrowsrLib {
         }
     }
     
-    public func searchOrganization(by term: String, page: Int) -> AnyPublisher<Organization, Error> {
-        switch requestMaker.makeSearchOrganization(with: term, page: page) {
+    public func searchOrganization(by term: String) -> AnyPublisher<Organization, Error> {
+        switch requestMaker.makeSearchOrganization(with: term) {
         case .success(let request):
             return organizationsUseCase.publisher(for: request)
         case .failure(let error):
