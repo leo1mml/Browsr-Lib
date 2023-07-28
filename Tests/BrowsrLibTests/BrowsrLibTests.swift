@@ -3,6 +3,14 @@ import XCTest
 import Combine
 
 class MockOrganizationsUseCase: FetchOrganizationsUsecase {
+    var singleResult: Result<Organization, Error>?
+    func publisher(for request: URLRequest) -> AnyPublisher<Organization, Error> {
+        guard let result = singleResult else {
+            return Fail(error: URLError(.dataNotAllowed)).eraseToAnyPublisher()
+        }
+        return result.publisher.eraseToAnyPublisher()
+    }
+    
     var result: Result<[Organization], Error>?
     func publisher(for request: URLRequest) -> AnyPublisher<[Organization], Error> {
         guard let result = result else {

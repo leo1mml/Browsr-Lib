@@ -3,6 +3,7 @@ import Foundation
 
 public protocol FetchOrganizationsUsecase {
     func publisher(for request: URLRequest) -> AnyPublisher<[Organization], Error>
+    func publisher(for request: URLRequest) -> AnyPublisher<Organization, Error>
 }
 
 public class URLSessionFetchOrganizationsUsecase: FetchOrganizationsUsecase {
