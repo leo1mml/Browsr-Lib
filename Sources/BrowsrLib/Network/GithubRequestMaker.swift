@@ -12,7 +12,8 @@ public class GithubRequestMaker: RequestMaker {
         var components = URLComponents()
         components.scheme = "https"
         components.host = source.baseUrl
-        components.path = source.listingPath + customPath
+        components.path = source.listingPath
+        components.query = customPath
         guard let url = components.url else {
             return .failure(URLError(.badURL))
         }
