@@ -22,7 +22,7 @@ public class BrowsrLib {
         }
     }
     
-    public func searchOrganizations(by term: String, page: Int) -> AnyPublisher<[Organization], Error> {
+    public func searchOrganization(by term: String, page: Int) -> AnyPublisher<[Organization], Error> {
         switch requestMaker.makeSearchOrganization(with: term, page: page) {
         case .success(let request):
             return organizationsUseCase.publisher(for: request)
