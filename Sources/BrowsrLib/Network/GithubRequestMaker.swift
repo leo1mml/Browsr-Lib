@@ -18,6 +18,7 @@ public class GithubRequestMaker: RequestMaker {
         }
         let headers = [
             "Content-Type": "application/json",
+            "Accept": "application/vnd.github+json",
             "Authorization": source.authToken
         ]
         var request = URLRequest(url: url)
@@ -28,7 +29,7 @@ public class GithubRequestMaker: RequestMaker {
         return .success(request)
     }
     
-    public func makeSearchOrganizations(with term: String, page: Int) -> Result<URLRequest, Error> {
+    public func makeSearchOrganization(with term: String, page: Int) -> Result<URLRequest, Error> {
         let queryItems = [
             URLQueryItem(name: "page", value: "\(page)")
         ]
@@ -43,6 +44,7 @@ public class GithubRequestMaker: RequestMaker {
         }
         let headers = [
             "Content-Type": "application/json",
+            "Accept": "application/vnd.github+json",
             "Authorization": source.authToken
         ]
         var request = URLRequest(url: url)

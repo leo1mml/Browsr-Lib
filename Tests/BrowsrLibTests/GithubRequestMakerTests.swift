@@ -16,7 +16,7 @@ class GithubRequestMakerTests: XCTestCase {
     }
     
     func testValidSearchURL() {
-        let result = sut.makeSearchOrganizations(with: "term", page: 1)
+        let result = sut.makeSearchOrganization(with: "term", page: 1)
         switch result {
         case .success(let request):
             XCTAssertEqual(request.url!.absoluteString, "https://www.test.com/search/term?page=1")
